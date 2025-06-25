@@ -116,17 +116,21 @@
         </div>
         <div class="stat-card">
             <div class="stat-number">22</div>
-            <div class="stat-label">Today</div>
+            <div class="stat-label">Completed Today</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">17</div>
+            <div class="stat-label">Pending Tasks</div>
         </div>
     </div>
 
     <div class="chart-container">
-        <h2>Daily Task Completion (Last 30 Days)</h2>
+        <h2>Daily Task Activity (Last 30 Days)</h2>
         <canvas id="tasksChart"></canvas>
     </div>
 
     <div class="footer">
-        <p>Last updated: 2025-06-25 21:13 UTC</p>
+        <p>Last updated: 2025-06-25 21:17 UTC</p>
     </div>
 
     <script>
@@ -136,7 +140,7 @@
             data: {
                 labels: ["May 27", "May 28", "May 29", "May 30", "May 31", "Jun 01", "Jun 02", "Jun 03", "Jun 04", "Jun 05", "Jun 06", "Jun 07", "Jun 08", "Jun 09", "Jun 10", "Jun 11", "Jun 12", "Jun 13", "Jun 14", "Jun 15", "Jun 16", "Jun 17", "Jun 18", "Jun 19", "Jun 20", "Jun 21", "Jun 22", "Jun 23", "Jun 24", "Jun 25"],
                 datasets: [{
-                    label: 'Tasks',
+                    label: 'Completed',
                     data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22],
                     borderColor: '#111',
                     backgroundColor: 'transparent',
@@ -146,13 +150,34 @@
                     pointRadius: 2,
                     pointBackgroundColor: '#111',
                     pointBorderColor: '#111'
+                }, {
+                    label: 'Pending Added',
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 17],
+                    borderColor: '#666',
+                    backgroundColor: 'transparent',
+                    borderWidth: 1,
+                    borderDash: [3, 3],
+                    fill: false,
+                    tension: 0,
+                    pointRadius: 2,
+                    pointBackgroundColor: '#666',
+                    pointBorderColor: '#666'
                 }]
             },
             options: {
                 responsive: true,
                 plugins: {
                     legend: {
-                        display: false
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            color: '#666',
+                            font: {
+                                size: 11
+                            },
+                            usePointStyle: true,
+                            padding: 15
+                        }
                     },
                     title: {
                         display: false
