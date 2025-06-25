@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Warrior Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        body {
+            font-family: "ETBook", Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+            max-width: 55rem;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            background: #fffff8;
+            color: #111;
+            line-height: 1.4;
+        }
+        .header {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 1rem;
+        }
+        .header h1 {
+            font-weight: 400;
+            font-size: 2.5rem;
+            margin: 0 0 0.5rem 0;
+            color: #111;
+        }
+        .header p {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #666;
+            font-style: italic;
+        }
+        .stats {
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        .stat-card {
+            flex: 1;
+            text-align: left;
+            border-right: 1px solid #ddd;
+            padding-right: 2rem;
+        }
+        .stat-card:last-child {
+            border-right: none;
+            padding-right: 0;
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 400;
+            color: #111;
+            margin: 0;
+            line-height: 1;
+        }
+        .stat-label {
+            color: #666;
+            margin-top: 0.25rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .chart-container {
+            margin-bottom: 2rem;
+        }
+        .chart-container h2 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin: 0 0 1rem 0;
+            color: #111;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.9rem;
+        }
+        .footer {
+            border-top: 1px solid #ccc;
+            padding-top: 1rem;
+            color: #999;
+            font-size: 0.8rem;
+            text-align: right;
+        }
+        @media (max-width: 768px) {
+            .stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .stat-card {
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+                padding-right: 0;
+                padding-bottom: 1rem;
+            }
+            .stat-card:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Task Warrior Dashboard</h1>
+        <p>Daily task completion tracking</p>
+    </div>
+
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-number">82</div>
+            <div class="stat-label">Total Completed</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">0.7</div>
+            <div class="stat-label">Daily Average (30 days)</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">22</div>
+            <div class="stat-label">Completed Today</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">16</div>
+            <div class="stat-label">Pending Tasks</div>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <h2>Daily Task Activity (Last 30 Days)</h2>
+        <canvas id="tasksChart"></canvas>
+    </div>
+
+    <div class="footer">
+        <p>Last updated: 2025-06-25 21:17 UTC</p>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('tasksChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["May 27", "May 28", "May 29", "May 30", "May 31", "Jun 01", "Jun 02", "Jun 03", "Jun 04", "Jun 05", "Jun 06", "Jun 07", "Jun 08", "Jun 09", "Jun 10", "Jun 11", "Jun 12", "Jun 13", "Jun 14", "Jun 15", "Jun 16", "Jun 17", "Jun 18", "Jun 19", "Jun 20", "Jun 21", "Jun 22", "Jun 23", "Jun 24", "Jun 25"],
+                datasets: [{
+                    label: 'Completed',
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22],
+                    borderColor: '#111',
+                    backgroundColor: 'transparent',
+                    borderWidth: 1,
+                    fill: false,
+                    tension: 0,
+                    pointRadius: 2,
+                    pointBackgroundColor: '#111',
+                    pointBorderColor: '#111'
+                }, {
+                    label: 'Pending Added',
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16],
+                    borderColor: '#666',
+                    backgroundColor: 'transparent',
+                    borderWidth: 1,
+                    borderDash: [3, 3],
+                    fill: false,
+                    tension: 0,
+                    pointRadius: 2,
+                    pointBackgroundColor: '#666',
+                    pointBorderColor: '#666'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            color: '#666',
+                            font: {
+                                size: 11
+                            },
+                            usePointStyle: true,
+                            padding: 15
+                        }
+                    },
+                    title: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        border: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#666',
+                            font: {
+                                size: 11
+                            }
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#eee',
+                            borderDash: [2, 2]
+                        },
+                        border: {
+                            display: false
+                        },
+                        ticks: {
+                            stepSize: 1,
+                            color: '#666',
+                            font: {
+                                size: 11
+                            }
+                        }
+                    }
+                },
+                elements: {
+                    point: {
+                        hoverRadius: 4
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
